@@ -260,7 +260,8 @@ export const store = new Vuex.Store({
                      let val = item.name.toLowerCase().includes(value);
                      if(val){
                          state.selected.push({
-                            name:item.name
+                            name:item.name,
+                            selected:true
                          });
                      }
                     });
@@ -268,8 +269,10 @@ export const store = new Vuex.Store({
               selectedCounty(state, payload){
                      state.slectCount.push({
                             name:payload.name,
-                            key:payload.key
+                            key:payload.key,
+                            selected:payload.selected
                      });
+                     
 
               },
               removeSelected(state, index){
