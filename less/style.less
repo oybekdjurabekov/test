@@ -1,0 +1,33 @@
+*{
+	margin:0;
+	padding:0;
+}
+body{
+	.wrapper{
+		header{
+			height: 80px;
+			margin-bottom: 90px;
+			background: #6caaaa;
+		}
+		.content{
+			display: flex;
+			width: 1300px;
+			margin:0 auto;
+			justify-content: space-between;
+			.product{
+				width: calc(25% - 25px);
+				border:1px solid #ccc;
+				border-radius: 4px;
+				.product-image{
+					width: 100%;
+					height: 400px;
+					img{
+						width: 100%;
+						height: 100%;
+						object-fit: cover;
+					}
+				}
+			}
+		}
+	}
+}
