@@ -3,21 +3,21 @@ export default{
 	state:{
 		items:[
 			{
-				url:'/',
-				title:'Home'
+				url:'/report',
+				title:'Отчеты'
 			},
 			{
-				url:'/Marketing',
-				title:'Marketing'
+				url:'/release',
+				title:'Релиз'
 			},
 			{
-				url:'/Blog',
-				title:'Blog'
+				url:'/profile',
+				title:'Профиль',
 			},
 			{
-				url:'/Contact',
-				title:'Contact Us'
-			}
+				url:'/signin',
+				title:'Выход'
+			},
 		]
 	},
 	getters:{

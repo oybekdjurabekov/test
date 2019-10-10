@@ -1,0 +1,1 @@
+<md-progress-bar class="md-accent" md-mode="indeterminate"></md-progress-bar>
