@@ -1,58 +1,32 @@
 <template>
-  <ul id="nav-mobile" class="right navbar-list mr-2">
-    <router-link v-for="(items, index) in listItems" :key="index" :to="items.url" tag="li">
-        <a >{{items.title}}</a>
-    </router-link>
-    <li>
-        <a class="waves-effect waves-block waves-light notification-button" href="#" data-target="notifications-dropdown">
-            <i class="material-icons">notifications_none<small class="notification-badge">5</small></i>
-        </a>
-        <ul class="dropdown-content" id="notifications-dropdown" style="" tabindex="0">
-          <li tabindex="0">
-            <h6>NOTIFICATIONS<span class="new badge">5</span></h6>
-          </li>
-          <li class="divider" tabindex="0"></li>
-          <li tabindex="0">
-            <a class="grey-text text-darken-2" href="#!">
-                <span class="material-icons icon-bg-circle cyan small">add_shopping_cart</span> 
-                A new order has been placed!
-            </a>
-            <time class="media-meta" datetime="2015-06-12T20:50:48+08:00">2 hours ago</time>
-          </li>
-          <li tabindex="0">
-            <a class="grey-text text-darken-2" href="#!">
-                <span class="material-icons icon-bg-circle red small">stars</span> 
-                Completed the task
-            </a>
-            <time class="media-meta" datetime="2015-06-12T20:50:48+08:00">3 days ago</time>
-          </li>
-          <li tabindex="0">
-            <a class="grey-text text-darken-2" href="#!">
-                <span class="material-icons icon-bg-circle teal small">settings</span> 
-                Settings updated
-            </a>
-            <time class="media-meta" datetime="2015-06-12T20:50:48+08:00">4 days ago</time>
-          </li>
-          <li tabindex="0">
-            <a class="grey-text text-darken-2" href="#!">
-                <span class="material-icons icon-bg-circle deep-orange small">today</span> 
-                Director meeting started
-            </a>
-            <time class="media-meta" datetime="2015-06-12T20:50:48+08:00">6 days ago</time>
-          </li>
-          <li tabindex="0">
-            <a class="grey-text text-darken-2" href="#!">
-                <span class="material-icons icon-bg-circle amber small">trending_up</span> 
-                Generate monthly report
-            </a>
-            <time class="media-meta" datetime="2015-06-12T20:50:48+08:00">1 week ago</time>
-          </li>
-       </ul>
-      </li>
-</ul>
+  <div class="right col m3">
+    <ul id="nav-mobile" class="left navbar-list">
+      <router-link v-for="(items, index) in listItems" :key="index" :to="items.url" tag="li">
+          <a >{{items.title}}</a>
+      </router-link>
+      <span v-if="isLoggedIn"><a @click="logout">Logout</a></span>
+  </ul>
+  <md-menu  md-align-trigger class="right">
+    <md-badge md-content="1" md-menu-trigger>
+      <md-button class="md-icon-button">
+        <md-icon>notifications</md-icon>
+      </md-button>
+    </md-badge>
+    <md-menu-content>
+      <md-menu-item>My Item 1</md-menu-item>
+      <md-menu-item>My Item 2</md-menu-item>
+      <md-menu-item>My Item 3</md-menu-item>
+    </md-menu-content>
+  </md-menu>
+  </div>
 </template>
 <script type="text/javascript">
   export default{
-    props:['listItems']
+    props:['listItems', 'isLoggedIn'],
+    methods:{
+      logout(){
+        $this.$emit('logout')
+      }
+    }
   }
 </script>

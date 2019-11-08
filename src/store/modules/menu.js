@@ -3,21 +3,13 @@ export default{
 	state:{
 		items:[
 			{
-				url:'/report',
-				title:'Отчеты'
-			},
-			{
 				url:'/release',
 				title:'Релиз'
 			},
 			{
 				url:'/profile',
 				title:'Профиль',
-			},
-			{
-				url:'/signin',
-				title:'Выход'
-			},
+			}
 		]
 	},
 	getters:{

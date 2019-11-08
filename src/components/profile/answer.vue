@@ -11,7 +11,7 @@
                   <div class="input-field col s12">
                     <md-field >
                       <md-icon>notes</md-icon>
-                      <label>Тема нужной информации </label>
+                      <label>Текст</label>
                       <md-input  required class="md-input"> </md-input>
                       <span class="md-error">There is an error</span>
                     </md-field>

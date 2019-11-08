@@ -5,11 +5,11 @@
               <div class="row">
                 <div class="col s12 m6 l4 animate fadeUp" v-for="(releaseItem, index) in releaseItems">
                   <div class="card-panel border-radius-6 mt-10 card-animation-1">
-                    <router-link :to="'Release/'+releaseItem.id">
+                    <router-link :to="'release/'+releaseItem.id">
                         <img :src='releaseItem.file' alt="" class="responsive-img border-radius-8 z-depth-4 image-n-margin" />
                     </router-link>
                     <h6 class="deep-purple-text text-darken-3 mt-5">
-                        <router-link :to="'Release/'+releaseItem.id">
+                        <router-link :to="'release/'+releaseItem.id">
                             {{releaseItem.title}}
                         </router-link>
                     </h6>

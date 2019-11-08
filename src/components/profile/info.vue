@@ -61,6 +61,16 @@
                 </div>
                 <div class="col s12">
                   <div class="input-field col s12">
+                    <md-field >
+                      <md-icon>notes</md-icon>
+                      <label>Текст</label>
+                      <md-input  required class="md-input"> </md-input>
+                      <span class="md-error">There is an error</span>
+                    </md-field>
+                  </div>
+                </div>
+                <div class="col s12">
+                  <div class="input-field col s12">
                     <md-field>
                       <label>Multiple</label>
                       <md-file required v-model="multiple" multiple />
@@ -85,6 +95,7 @@
             selectedDate:null,
             selectedMovies:'',
             selectedDepartment:'',
+            text:'',
             show:true,
             multiple:[],  
         }
@@ -94,6 +105,8 @@
        }, 
        computed:{
         dateFormat(){
+            return this.$material.locale.language = 'ru';
+            return this.$material.locale.firstDayOfAWeek = 1;
             return this.$material.locale.dateFormat = 'dd.MM.yyyy'
         }
        }

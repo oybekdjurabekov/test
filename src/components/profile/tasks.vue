@@ -4,7 +4,7 @@
           <div class="card-content card-border-gray">
             <div class="row">
               <div class="col s12" style="display: flex; justify-content: space-between;">
-                <h5>ToDo List</h5>
+                <h5>Задачи</h5>
                 <md-button @click="showDialog = !showDialog" class="md-primary md-raised">Добавить задачу</md-button> 
               </div>
 
@@ -15,11 +15,11 @@
 	                    <div class="sidebar-list-padding app-sidebar" id="todo-sidenav">
 	                      <ul class="todo-list display-grid">
 	                        <li class="sidebar-title">Filters</li>
-	                        <li v-for="(statusItem, index) in status" :class="statusItem.active ? 'active' : ''">
-	                            <a href="#" class="text-sub" @click.prevent="filterList(statusItem)">
-	                                <i class="material-icons mr-2">  {{statusItem.icon}} </i> 
+	                        <li v-for="(statusItem, index) in filterButtonList" @click="filterList(statusItem, index)" :class="statusItem.active ? 'active' : ''">
+	                            <span class="text-sub">
+	                                <i class="material-icons mr-2">{{statusItem.icon}} </i> 
 	                                {{statusItem.title}}
-	                            </a>
+	                            </span>
 	                        </li>
 	                        
 	                      </ul>
@@ -33,21 +33,19 @@
 	                <div class="app-wrapper">
 	                  <div class="app-search">
 	                    <i class="material-icons mr-2 search-icon">search</i>
-	                    <input type="text" v-model="search" @change="searchText($event.target.value)" placeholder="Search Contact" class="app-filter" id="todo_filter">
+	                    <input type="text" v-model="search" @input="searchText($event.target.value)" placeholder="Поиск задач" class="app-filter" id="todo_filter">
 	                  </div>
 	                  <div class="card card card-default scrollspy border-radius-6 fixed-width">
 	                    <div class="card-content p-0">
 	                      <ul class="collection todo-collection ps ps--active-y" >
 	                        <li class="collection-item" v-for="(toDo, index) in toDoList">
 	                          <div class="list-left">
-	                            <label>
-	                              <input type="checkbox" @change="checkedItem(toDo)" :checked="toDo.status">
-	                              <span></span>
-	                            </label>
+                              <md-checkbox class="md-primary" style="margin:5px 10px;" v-model="toDo.status" @click="checkedItem(toDo, index)"></md-checkbox>
+	                           
 	                          </div>
 	                          <div class="list-content">
 	                            <div class="list-title-area">
-	                              <div class="list-title" :style="toDo.status ? 'text-decoration: line-through;' : ''">{{toDo.title}}  {{index}}</div>
+	                              <div class="list-title" :style="toDo.status ? 'text-decoration: line-through;' : ''">{{toDo.title}}</div>
 	                            </div>
 	                            <div class="list-desc"  :style="toDo.status ? 'text-decoration: line-through;' : ''">{{toDo.description}}</div>
 	                          </div>
@@ -102,36 +100,17 @@
             date:null,
             title:'',
             description:'',
-            status:[
-                {
-                    title:'Все',
-                    icon:'mail_outline',
-                    active:true,
-                    value:'all'
-                },{
-                    title:'Активные',
-                    icon:'date_range',
-                    active:false,
-                    value:false
-                },{
-                    title:'Заверщенные',
-                    icon:'check',
-                    active:false,
-                    value:true
-                },
-            ],
         }
        },
        methods:{
         deleteToDo(index){
             this.$store.commit('ToDoList/deleteToDo', index)
         },
-        filterList(statusItem){
-            this.status.active = !this.status.active
-            this.$store.commit('ToDoList/filterList', statusItem.value)
+        filterList(statusItem, index){
+            this.$store.commit('ToDoList/filterList', statusItem)
         },
-        checkedItem(item){
-            item.status = !item.status
+        checkedItem(item, index){
+            this.$store.commit('ToDoList/checkedItem', index)
         },
         searchText(value){
             this.$store.commit('ToDoList/searchText', value)
@@ -144,6 +123,7 @@
        computed:{
         ...mapGetters('ToDoList', {
             'toDoList':'tasksItems',
+            'filterButtonList':'filterButton',
         }),
         dateFormat(){
             return this.$material.locale.dateFormat = 'dd.MM.yyyy'

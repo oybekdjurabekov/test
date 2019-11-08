@@ -6,11 +6,11 @@ import NProgress from 'nprogress';
 
 
 Vue.use(VueRouter);
-
+import store from './store/auth/login.js'
 import Home from './components/page/Home';
-import Report from './components/page/Report';
 import Tasks from './components/page/Tasks';
 import Login from './components/page/Login';
+import Signup from './components/page/Signup';
 import Release from './components/page/Release';
 import ReleaseItem from './components/page/ReleaseItem';
 import Profile from './components/page/Profile';
@@ -20,39 +20,51 @@ import ProfileInfo from './components/profile/info';
 import ProfileAnswer from './components/profile/answer';
 import ProfileSender from './components/profile/send';
 
+
 const routes = [
 	{
-		path:'',
-		name:'home',
-		component:Home
-	},
-	{
-		path:'/report',
-		name:'report',
-		component:Report
+		path:'/dashboard',
+		name:'dashboard',
+		component:Home,
+		meta: { 
+	        requiresAuth: true
+	      }
 	},
 	{
 		path:'/signin',
 		name:'signin',
-		component:Login
+		component:Login,
+	},
+	{
+		path:'/signup',
+		name:'signup',
+		component:Signup,
 	},
 	{
 		path:'/release',
 		name:'release',
-		component:Release
+		component:Release,
+		meta: { 
+        requiresAuth: true
+      }
 	},
 	{
 		path:'/release/:id',
 		name:'releaseItem',
-		component:ReleaseItem
+		component:ReleaseItem,
+		meta: { 
+        requiresAuth: true
+      }
 	},
 	{
 		path:'/profile',
 		component:Profile,
-		name:'profile',
+		meta: { 
+	        requiresAuth: true
+         },
 		children: [
             {
-	          path: '/',
+	          path: '',
 	          name:'task',
 	          component: ProfileTask
 	        }
@@ -91,6 +103,22 @@ export const router = new VueRouter({
 	mode: 'history',
 })
 
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    // этот путь требует авторизации, проверяем залогинен ли
+    // пользователь, и если нет, перенаправляем на страницу логина
+    if (store.getters.isLoggedIn) {
+      next({
+        path: '/signin',
+        query: { redirect: to.fullPath }
+      })
+    } else {
+      next()
+    }
+  } else {
+    next() // всегда так или иначе нужно вызвать next()!
+  }
+})
 router.beforeResolve((to, from, next) => {
   if (to.name) {
       NProgress.start()

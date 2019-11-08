@@ -6,7 +6,15 @@
 {
     background-color: #e51c23 !important;
 }
-
+#login-page{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.login-card{
+    position: relative;
+    margin:40px auto 0;
+}
 .materialize-red-text
 {
     color: #e51c23 !important;
@@ -2727,15 +2735,42 @@ body
 {
     padding-left: 0;
 }
+nav.navbar-main{
+    position: relative;
+    z-index: 10;
+    background: transparent !important;
+    
+}
+nav.navbar-main ul{
+    margin:0;
+}
+nav.navbar-main .brand-logo{
+    position: relative;
+    padding-left: 70px;
+    display: flex;
+    align-items: center;
+    text-transform: uppercase;
+}
+nav.navbar-main .brand-logo:before{
+    background: url('../img/logo.png') no-repeat;
+    background-size: contain;
+    width: 60px;
+    position: absolute;
+    left:0;
+    height: 60px;
+    content: "";
+    display: block;
+
+}
 .content-wrapper-before
 {
     position: absolute;
     z-index: 0;
-    top: 64px;
+    top: 0;
     left: 0;
 
     width: 100%;
-    height: 185px;
+    height: 200px;
 
     -webkit-transition: .3s ease all;
        -moz-transition: .3s ease all;
@@ -2750,6 +2785,8 @@ footer
 footer.page-footer
 {
     padding-top: 1px;
+    height: 51px;
+    margin-top: -51px;
 }
 
 select
@@ -2808,7 +2845,7 @@ select
     }
     footer
     {
-        padding-left: 260px;
+        padding-left:0;
     }
 }
 
@@ -7586,43 +7623,7 @@ span.badge.pill
 /*----------------------------------------
   Material
 ------------------------------------------*/
-@font-face
-{
-    font-family: 'Material Icons';
-    font-weight: 400;
-    font-style: normal;
 
-    src: local('Material Icons'), local('MaterialIcons-Regular'), url('../../../fonts/material-design-icons/MaterialIcons-Regular.ttf') format('truetype'), url('../../../fonts/material-design-icons/MaterialIcons-Regular.woff2') format('woff2'), url('../../../fonts/material-design-icons/MaterialIcons-Regular.woff') format('woff'), url('../../../fonts/material-design-icons/MaterialIcons-Regular.eot');
-}
-
-.material-icons
-{
-    font-family: 'Material Icons';
-    font-size: 24px;
-    font-weight: normal;
-    font-style: normal;
-    line-height: 1;
-    /* Preferred icon size */
-
-    display: inline-block;
-
-    white-space: nowrap;
-    letter-spacing: normal;
-    text-transform: none;
-    word-wrap: normal;
-
-    direction: ltr;
-    /* Support for all WebKit browsers. */
-    -webkit-font-smoothing: antialiased;
-    /* Support for Safari and Chrome. */
-    text-rendering: optimizeLegibility;
-    /* Support for Firefox. */
-    -moz-osx-font-smoothing: grayscale;
-    /* Support for IE. */
-    -webkit-font-feature-settings: 'liga';
-       -moz-font-feature-settings: 'liga';
-            font-feature-settings: 'liga';
-}
 
 /* Rules for sizing the icon. */
 .material-icons.md-18
@@ -10819,6 +10820,7 @@ tr.group:hover
 
 .page-footer .footer-copyright
 {
+    color:#fff;
     background-color: transparent;
 }
 
@@ -11541,7 +11543,7 @@ body.dragging *
     -webkit-box-shadow: 0 0 8px 0 #2196f3;
             box-shadow: 0 0 8px 0 #2196f3;
 }
-.sidebar .sidebar-content .sidebar-menu ul li.active a
+.sidebar .sidebar-content .sidebar-menu ul li.active a, .sidebar .sidebar-content .sidebar-menu ul li.active span
 {
     color: #fff;
 }
@@ -11859,7 +11861,14 @@ body.dragging *
     height: 1rem;
     margin: .3rem 0;
 }
-
+.md-theme-default body a:not(.md-button),  body .md-list.md-theme-default  .router-link-active .md-list-item-content, .md-theme-default body a:hover:not(.md-button){
+    color:inherit;
+    color:inherit;
+    text-decoration: none;
+}
+body .md-list.md-theme-default .router-link-exact-active a{
+    color:#448aff;
+}
 a:not([href]):not([tabindex]) {
     color: inherit;
     text-decoration: none;
@@ -11877,3 +11886,36 @@ a:not([href]):not([tabindex]) {
 .bs-popover-auto[x-placement^=top]>.arrow, .bs-popover-top>.arrow {
     bottom: calc((.5rem + 1px) * -1);
 }
+
+.md-field.md-theme-default.md-focused.md-invalid label {
+    color: #ff1744;
+    color: var(--md-theme-default-fieldvariant, #ff1744);
+}
+.md-field.md-theme-default.md-valid label {
+    color: #00bfa5;
+    color: var(--md-theme-default-fieldvariant, #00bfa5);
+}
+
+.sidebarMenu li{
+    padding: 0;
+}
+.sidebarMenu li.router-link-exact-active {
+    color: #fff;
+    border-radius: 0 5px 5px 0;
+    background: #03a9f4 ;
+}
+.sidebarMenu .sidebar-content .sidebar-menu ul li.router-link-exact-active a{
+    color: #fff;
+}
+.sidebarMenu .sidebar-content .sidebar-menu ul li a {
+    display: block;
+    padding: 0 0 0 16px !important;
+    margin-right: 16px;
+}
+.page-container{
+    min-height: 100%;
+    padding-bottom: 71px;
+}
+/*.md-button-content{
+    color:#fff;
+}*/
