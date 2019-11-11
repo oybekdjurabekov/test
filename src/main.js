@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueMaterial from 'vue-material'
 import App from './App.vue';
-import {store} from './store/index';
+import store from './store';
 import {router} from './routes';
 import Axios from 'axios';
 import VueMask from 'v-mask'
@@ -13,7 +13,7 @@ const token = localStorage.getItem('token')
 if (token) {
   Vue.prototype.$http.defaults.headers.common['Authorization'] = token
 }
-Axios.defaults.headers.get['Content-Type'] = 'application/x-www-form-urlencoded'
+Axios.defaults.headers.get['Content-Type'] = 'application/json'
 Axios.defaults.headers.post['Content-Type'] = 'multipart/form-data'
 new Vue({
   el: '#app',

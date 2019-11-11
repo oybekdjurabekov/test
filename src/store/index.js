@@ -12,7 +12,7 @@ Vue.use(VueMaterial)
 
 const debug = process.env.NODE_ENV !== 'production'
 
-export const store = new Vuex.Store({
+export default new Vuex.Store({
 	modules:{
        menu,
        ToDoList,

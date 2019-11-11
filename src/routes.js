@@ -4,9 +4,8 @@ import '../node_modules/nprogress/nprogress.css'
 Vue.config.productionTip = false
 import NProgress from 'nprogress';
 
-
 Vue.use(VueRouter);
-import store from './store/auth/login.js'
+import store from './store'
 import Home from './components/page/Home';
 import Tasks from './components/page/Tasks';
 import Login from './components/page/Login';
@@ -23,7 +22,7 @@ import ProfileSender from './components/profile/send';
 
 const routes = [
 	{
-		path:'/dashboard',
+		path:'/',
 		name:'dashboard',
 		component:Home,
 		meta: { 
@@ -34,6 +33,7 @@ const routes = [
 		path:'/signin',
 		name:'signin',
 		component:Login,
+		meta: {authPage: true}
 	},
 	{
 		path:'/signup',
@@ -44,24 +44,18 @@ const routes = [
 		path:'/release',
 		name:'release',
 		component:Release,
-		meta: { 
-        requiresAuth: true
-      }
+		meta: {requiresAuth: true}
 	},
 	{
 		path:'/release/:id',
 		name:'releaseItem',
 		component:ReleaseItem,
-		meta: { 
-        requiresAuth: true
-      }
+		meta: {requiresAuth: true}
 	},
 	{
 		path:'/profile',
 		component:Profile,
-		meta: { 
-	        requiresAuth: true
-         },
+		meta: {requiresAuth: true},
 		children: [
             {
 	          path: '',
@@ -73,6 +67,7 @@ const routes = [
 	{
 		path:'/profile/:title',
 		component:Profile,
+		meta: {requiresAuth: true},
 		children: [
             {
 	          path: '/profile/meeting',
@@ -110,6 +105,15 @@ router.beforeEach((to, from, next) => {
     if (store.getters.isLoggedIn) {
       next({
         path: '/signin',
+        query: { redirect: to.fullPath }
+      })
+    } else {
+      next()
+    }
+  } else if(to.matched.some(record => record.meta.authPage)) {
+    if (store.getters.isLoggedIn) {
+      next({
+        name: 'dashboard',
         query: { redirect: to.fullPath }
       })
     } else {

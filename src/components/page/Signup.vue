@@ -1,195 +1,163 @@
 <template>
  <div class="col s12 ">
-    <div class="container">
-      <div id="login-page" class="row">
-      <div >
-         <form novalidate class="md-layout" @submit.prevent="validateUser">
-            <md-card class="card-panel  border-radius-6 ">
+    <div class="container" style="margin:40px 0;">
+         <form novalidate @submit.prevent="validateUser">
+            <md-card class=" border-radius-6 ">
               <md-card-header>
                 <div class="md-title">Регистрация</div>
               </md-card-header>
-
-              <md-card-content>
-                <div class="md-layout md-gutter">
-                  <div class="md-layout-item md-small-size-100">
+              <md-card-content class="col l12">
+                <div class=" md-gutter">
+                    <div class="md-title">Личные данные</div>
+                    <hr/>
                     <md-field :class="getValidationClass('username')">
-                      <label for="username">username</label>
-                      <md-input name="username" id="username" autocomplete="off" v-model="form.username" :disabled="sending" />
-                      <span class="md-error" v-if="!$v.form.username.required">The username is required</span>
-                      <span class="md-error" v-else-if="!$v.form.username.minlength">Invalid username</span>
+                      <md-icon>person_outline</md-icon>
+                      <label>Имя пользователя</label>
+                      <md-input name="username" autocomplete="off" v-model="form.username" :disabled="sending" />
+                      <span class="md-error" v-if="!$v.form.username.required">Обязательно поле</span>
+                      <span class="md-error" v-else-if="!$v.form.username.minlength">Invalid Имя пользователя</span>
                     </md-field>
-                  </div>
-
-                  <div class="md-layout-item md-small-size-100">
                     <md-field :class="getValidationClass('first_name')">
-                      <label for="first_name">first_name</label>
+                      <md-icon>person_outline</md-icon>
+                      <label>Фамилия</label>
                       <md-input name="first_name" id="first_name" autocomplete="off" v-model="form.first_name" :disabled="sending" />
-                      <span class="md-error" v-if="!$v.form.first_name.required">The first_name is required</span>
-                      <span class="md-error" v-else-if="!$v.form.first_name.minlength">Invalid first_name</span>
+                      <span class="md-error" v-if="!$v.form.first_name.required">Обязательно поле</span>
+                      <span class="md-error" v-else-if="!$v.form.first_name.minlength">Invalid Фамилия</span>
                     </md-field>
-                  </div>
-                </div>
-                <div class="md-layout md-gutter">
-                  <div class="md-layout-item md-small-size-100">
                     <md-field :class="getValidationClass('last_name')">
-                      <label for="last_name">last_name</label>
+                      <md-icon>person_outline</md-icon>
+                      <label>Имя</label>
                       <md-input name="last_name" id="last_name" autocomplete="off" v-model="form.last_name" :disabled="sending" />
-                      <span class="md-error" v-if="!$v.form.last_name.required">The last_name is required</span>
-                      <span class="md-error" v-else-if="!$v.form.last_name.minlength">Invalid last_name</span>
+                      <span class="md-error" v-if="!$v.form.last_name.required">Обязательно поле</span>
+                      <span class="md-error" v-else-if="!$v.form.last_name.minlength">Invalid Имя</span>
                     </md-field>
-                  </div>
-
-                  <div class="md-layout-item md-small-size-100">
-                    <md-field :class="getValidationClass('email')">
-                      <label for="email">email</label>
-                      <md-input type="email" name="email" id="email" autocomplete="off" v-model="form.email" :disabled="sending" />
-                      <span class="md-error" v-if="!$v.form.email.required">The email is required</span>
-                      <span class="md-error" v-else-if="!$v.form.email.minlength">Invalid email</span>
-                    </md-field>
-                  </div>
-                </div>
-                <div class="md-layout md-gutter">
-                  <div class="md-layout-item md-small-size-100">
                     <md-field :class="getValidationClass('birthdate')">
-                      
                       <md-datepicker md-immediately v-model="form.birthdate" 
                                       :disabled="sending"
                                       name="birthdate" 
                                       id="birthdate"
-                                      :format="dateFormat"/>
-                      <label for="birthdate">birthdate</label>                
-                      <span class="md-error" v-if="!$v.form.birthdate.required">The birthdate is required</span>
+                                      :format="dateFormat">
+                      <label>Дата рождения</label>        
+                      <span class="md-error" v-if="!$v.form.birthdate.required">Обязательно поле</span>
+                      </md-datepicker>        
                     </md-field>
-                  </div>
-
-                  <div class="md-layout-item md-small-size-100">
                     <md-field :class="getValidationClass('birthplace')">
-                      <label for="birthplace">birthplace</label>
+                      <md-icon>near_me</md-icon>
+                      <label>Место рождения</label>
                       <md-input name="birthplace" id="birthplace" autocomplete="off" v-model="form.birthplace" :disabled="sending" />
-                      <span class="md-error" v-if="!$v.form.birthplace.required">The birthplace is required</span>
+                      <span class="md-error" v-if="!$v.form.birthplace.required">Обязательно поле</span>
                       <span class="md-error" v-else-if="!$v.form.birthplace.minlength">Invalid birthplace</span>
                     </md-field>
-                  </div>
                 </div>
-                <div class="md-layout md-gutter">
-                  <div class="md-layout-item md-small-size-100">
+                <div class="md-gutter">
+                    <div class="md-title">Контактные данные</div>
+                    <hr/>
+                    <md-field :class="getValidationClass('email')">
+                      <md-icon>email</md-icon>
+                      <label>Email</label>
+                      <md-input type="email" name="email" id="email" autocomplete="off" v-model="form.email" :disabled="sending" />
+                      <span class="md-error" v-if="!$v.form.email.required">Обязательно поле</span>
+                      <span class="md-error" v-else-if="!$v.form.email.minlength">Invalid email</span>
+                    </md-field>
                     <md-field :class="getValidationClass('phone')">
-                      <label for="phone">phone</label>
+                      <md-icon>phone_iphone</md-icon>
+                      <label>Номер телефона</label>
                       <md-input name="phone" id="phone" v-mask="'+998 ## ###-##-##'" type="tel" autocomplete="off" v-model="form.phone" :disabled="sending" />
-                      <span class="md-error" v-if="!$v.form.phone.required">The phone is required</span>
+                      <span class="md-error" v-if="!$v.form.phone.required">Обязательно поле</span>
                       <span class="md-error" v-else-if="!$v.form.phone.minlength">Invalid phone</span>
                     </md-field>
-                  </div>
-                  <div class="md-layout-item md-small-size-100">
                     <md-field :class="getValidationClass('emergency_phone')">
-                      <label for="emergency_phone">emergency_phone</label>
+                      <md-icon>phone_in_talk</md-icon>
+                      <label>emergency_phone</label>
                       <md-input name="emergency_phone" id="emergency_phone" v-mask="'+998 ## ###-##-##'" type="tel" autocomplete="off" v-model="form.emergency_phone" :disabled="sending" />
-                      <span class="md-error" v-if="!$v.form.emergency_phone.required">The emergency_phone is required</span>
+                      <span class="md-error" v-if="!$v.form.emergency_phone.required">Обязательно поле</span>
                       <span class="md-error" v-else-if="!$v.form.emergency_phone.minlength">Invalid emergency_phone</span>
                     </md-field>
-                  </div>
+                    
                 </div>
-                <div class="md-layout md-gutter">
-                  <div class="md-layout-item md-small-size-100">
-                    <md-field :class="getValidationClass('work_address')">
-                      <label for="work_address">work_address</label>
-                      <md-input name="work_address" id="work_address" autocomplete="off" v-model="form.work_address" :disabled="sending" />
-                      <span class="md-error" v-if="!$v.form.work_address.required">The work_address is required</span>
-                      <span class="md-error" v-else-if="!$v.form.work_address.minlength">Invalid work_address</span>
-                    </md-field>
-                  </div>
-                </div>
-
-                <div class="md-layout md-gutter">
-                  <div class="md-layout-item md-small-size-100">
-                    <md-field :class="getValidationClass('position')">
-                      <label for="position">position</label>
-                      <md-input name="position" id="position" autocomplete="off" v-model="form.position" :disabled="sending" />
-                      <span class="md-error" v-if="!$v.form.position.required">The position is required</span>
+                <div class="md-gutter">
+                  <div class="md-title">Рабочие данные</div>
+                  <hr/>
+                  <md-field :class="getValidationClass('work_address')">
+                    <md-icon>place</md-icon>
+                    <label>work_address</label>
+                    <md-input name="work_address" id="work_address" autocomplete="off" v-model="form.work_address" :disabled="sending" />
+                    <span class="md-error" v-if="!$v.form.work_address.required">Обязательно поле</span>
+                    <span class="md-error" v-else-if="!$v.form.work_address.minlength">Invalid work_address</span>
+                  </md-field>
+                  <md-field :class="getValidationClass('position')">
+                      <md-icon>turned_in_not</md-icon>
+                      <label>position</label>
+                      <md-input name="position" autocomplete="off" v-model="form.position" :disabled="sending" />
+                      <span class="md-error" v-if="!$v.form.position.required">Обязательно поле</span>
                       <span class="md-error" v-else-if="!$v.form.position.minlength">Invalid position</span>
-                    </md-field>
-                  </div>
-
-                  <div class="md-layout-item md-small-size-100">
-                    <md-field :class="getValidationClass('position_date')">
-                      <md-datepicker md-immediately v-model="form.position_date" 
-                                      :disabled="sending"
-                                      name="position_date" 
-                                      id="position_date"
-                                      :format="dateFormat"/>
-                      <label for="position_date">position_date</label> 
-                      <span class="md-error" v-if="!$v.form.position_date.required">The position_date is required</span>
-                    </md-field>
-                  </div>
+                  </md-field>
+                  <md-field :class="getValidationClass('position_date')">
+                    <md-datepicker md-immediately v-model="form.position_date" 
+                                    :disabled="sending"
+                                    name="position_date" 
+                                    id="position_date"
+                                    :format="dateFormat">
+                    <label>position_date</label>        
+                    <span class="md-error" v-if="!$v.form.position_date.required">Обязательно поле</span>
+                    </md-datepicker>  
+                  </md-field>
+                  <md-field :class="getValidationClass('email')">
+                    <md-icon>phonelink_ring</md-icon>
+                    <label>editorial_office_phone</label>
+                    <md-input v-mask="'+998 ## ###-##-##'" type="tel" name="editorial_office_phone" id="editorial_office_phone" autocomplete="off" v-model="form.editorial_office_phone" :disabled="sending" />
+                    <span class="md-error" v-if="!$v.form.editorial_office_phone.required">Обязательно поле</span>
+                    <span class="md-error" v-else-if="!$v.form.editorial_office_phone.minlength">Invalid editorial_office_phone</span>
+                  </md-field>
+                  <md-field :class="getValidationClass('editorial_office_address')">
+                    <md-icon>location_on</md-icon>
+                    <label>editorial_office_address</label>
+                    <md-input name="editorial_office_address" id="editorial_office_address" autocomplete="off" type="text" v-model="form.editorial_office_address" :disabled="sending" />
+                    <span class="md-error" v-if="!$v.form.editorial_office_address.required">Обязательно поле</span>
+                    <span class="md-error" v-else-if="!$v.form.editorial_office_address.minlength">Invalid editorial_office_address</span>
+                  </md-field>
                 </div>
-                <div class="md-layout md-gutter">
-                  <div class="md-layout-item md-small-size-100">
+                <div class="md-gutter">
+                  <div class="md-title">Дополнительно</div>
+                  <hr/>
                     <md-field :class="getValidationClass('email')">
-                      <label for="editorial_office_phone">editorial_office_phone</label>
-                      <md-input v-mask="'+998 ## ###-##-##'" type="tel" name="editorial_office_phone" id="editorial_office_phone" autocomplete="off" v-model="form.editorial_office_phone" :disabled="sending" />
-                      <span class="md-error" v-if="!$v.form.editorial_office_phone.required">The editorial_office_phone is required</span>
-                      <span class="md-error" v-else-if="!$v.form.editorial_office_phone.minlength">Invalid editorial_office_phone</span>
-                    </md-field>
-                  </div>
-
-                  <div class="md-layout-item md-small-size-100">
-                    <md-field :class="getValidationClass('editorial_office_address')">
-                      <label for="editorial_office_address">editorial_office_address</label>
-                      <md-input name="editorial_office_address" id="editorial_office_address" autocomplete="off" type="text" v-model="form.editorial_office_address" :disabled="sending" />
-                      <span class="md-error" v-if="!$v.form.editorial_office_address.required">The editorial_office_address is required</span>
-                      <span class="md-error" v-else-if="!$v.form.editorial_office_address.minlength">Invalid editorial_office_address</span>
-                    </md-field>
-                  </div>
-                </div>
-                <div class="md-layout md-gutter">
-                  <div class="md-layout-item md-small-size-100">
-                    <md-field :class="getValidationClass('email')">
-                      <label for="identity_photo">identity_photo</label>
+                      <label>identity_photo</label>
                       <md-file name="identity_photo" id="identity_photo" v-model="form.identity_photo" :disabled="sending"/>
-                      <span class="md-error" v-if="!$v.form.identity_photo.required">The identity_photo is required</span>
+                      <span class="md-error" v-if="!$v.form.identity_photo.required">Обязательно поле</span>
                       <span class="md-error" v-else-if="!$v.form.identity_photo.minlength">Invalid identity_photo</span>
                     </md-field>
-                  </div>
-
-                  <div class="md-layout-item md-small-size-100">
                     <md-field :class="getValidationClass('photo')">
-                      <label for="photo">photo</label>
+                      <label>photo</label>
                       <md-file name="photo" id="photo" v-model="form.photo" :disabled="sending"/>
-                      <span class="md-error" v-if="!$v.form.photo.required">The photo is required</span>
+                      <span class="md-error" v-if="!$v.form.photo.required">Обязательно поле</span>
                       <span class="md-error" v-else-if="!$v.form.photo.minlength">Invalid photo</span>
                     </md-field>
-                  </div>
                 </div>
-                <div class="md-layout md-gutter">
-                  <div class="md-layout-item md-small-size-100">
+                <div class="md-gutter">
+                  <div class="md-title">Безопасность</div>
+                  <hr/>
                     <md-field :class="getValidationClass('password')">
-                      <label for="password">password</label>
+                      <md-icon>lock_outline</md-icon>
+                      <label>password</label>
                       <md-input type="password" id="password" v-model.trim="form.password" :disabled="sending" />
-                      <span class="md-error" v-if="!$v.form.password.required">The password is required</span>
+                      <span class="md-error" v-if="!$v.form.password.required">Обязательно поле</span>
                       <span class="md-error" v-else-if="!$v.form.password.minlength">Invalid password</span>
                     </md-field>
-                  </div>
-
-                  <div class="md-layout-item md-small-size-100">
                     <md-field :class="getValidationClass('password_confirm')">
-                      <label for="password_confirm">password_confirm</label>
+                      <md-icon>lock_outline</md-icon>
+                      <label>password_confirm</label>
                       <md-input type="password" id="password_confirm" v-model.trim="form.password_confirm" :disabled="sending" />
-                      <span class="md-error" v-if="!$v.form.password_confirm.required">The password_confirm is required</span>
+                      <span class="md-error" v-if="!$v.form.password_confirm.required">Обязательно поле</span>
                       <span class="md-error" v-else-if="!$v.form.password_confirm.sameAsPassword">Passwords must be identical.</span>
                     </md-field>
-                  </div>
                 </div>
               </md-card-content>
-
               <md-progress-bar md-mode="indeterminate" v-if="sending" />
-
               <md-card-actions>
                 <md-button type="submit" class="btn waves-effect waves-light border-round light-blue col s12" :disabled="sending">Регистрация</md-button>
               </md-card-actions>
             </md-card>
           </form>
-      </div>
-    </div>
   </div>
 </div>  
 </template>
@@ -331,7 +299,7 @@
 
         if (field) {
           return {
-            'md-invalid': field.$invalid && field.$dirty
+            'md-invalid': 'field.$invalid' && field.$dirty
           }
         }
       },

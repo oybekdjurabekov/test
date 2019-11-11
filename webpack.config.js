@@ -48,6 +48,12 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
     noInfo: true,
+    proxy: {
+      '/ru': {
+        target: 'http://127.0.0.1:8000/ru',
+        secure: false
+      }
+    },
     overlay: true
   },
   performance: {

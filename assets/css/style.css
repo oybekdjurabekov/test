@@ -6,10 +6,26 @@
 {
     background-color: #e51c23 !important;
 }
+.login-bg {
+    background-image: url(../img/flat-bg.jpg);
+    background-repeat: no-repeat;
+    -webkit-background-size: cover;
+    background-size: cover;
+    height: 100%;
+}
+.md-field.md-theme-default.md-invalid .md-icon, .md-field.md-theme-default.md-invalid .md-icon.md-theme-default.md-icon-image svg{
+    color: #ff1744;
+    color: var(--md-theme-default-fieldvariant, #ff1744);
+    fill: #ff1744;
+    fill: var(--md-theme-default-fieldvariant, #ff1744);
+}
 #login-page{
     display: flex;
     justify-content: center;
     align-items: center;
+}
+#login-page .card-panel{
+    margin-right: auto;
 }
 .login-card{
     position: relative;
@@ -2785,8 +2801,6 @@ footer
 footer.page-footer
 {
     padding-top: 1px;
-    height: 51px;
-    margin-top: -51px;
 }
 
 select

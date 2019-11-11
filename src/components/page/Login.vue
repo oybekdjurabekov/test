@@ -9,17 +9,17 @@
                 <h5 class="ml-4">Войти</h5>
               </div>
             </div>
-            <div class="row margin">
-              <md-field  class="col s12">
+            <div class="col l12">
+              <md-field  class="">
                 <md-icon>person_outline</md-icon>
-                <label>Username</label>
+                <label>Имя пользователя</label>
                 <md-input v-model="email" type="text"></md-input>
               </md-field>
             </div>
-            <div class="row margin">
-              <md-field  class="col s12">
-                <i class="material-icons prefix">lock_outline</i>
-                <label>Password</label>
+            <div class="col l12">
+              <md-field>
+                <md-icon>lock_outline</md-icon>
+                <label>Пароль</label>
                 <md-input v-model="password" type="password"></md-input>
               </md-field>
             </div>
