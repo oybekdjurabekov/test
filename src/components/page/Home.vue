@@ -18,6 +18,7 @@
     // import 'bootstrap/dist/css/bootstrap.min.css'  
     import $ from 'jquery'
     import { FullCalendar } from 'vue-full-calendar'
+    import { mapGetters } from 'vuex'
     import 'fullcalendar/dist/fullcalendar.css'
     export default {
         
@@ -32,47 +33,16 @@
           contentButton:`<a href="#"
                            class="md-primary md-raised md-theme-default add">Добавить к себе</a>
                         </div>`,
-          events: [
-            {
-                title  : 'event1',
-                description:'asd123123123',
-                start  : '2019-10-10',
-            },
-            {
-                title  : 'event2',
-                description:'eventPopover ',
-                start  : '2019-10-12',
-            },
-            {
-                title  : 'event5',
-                description:'eventPopover eventPopover ',
-                start  : '2019-10-12',
-            },
-            {
-                title  : 'event72',
-                description:'eventPopover eventPopover eventPopover ',
-                start  : '2019-10-12',
-            },
-            {
-                title  : 'event33',
-                description:'eventPopover eventPopover eventPopover eventPopover ',
-                start  : '2019-10-12',
-            },
-            {
-                title  : 'event3',
-                description:'asdjnkj123123',
-                start  : '2019-10-09',
-            },
-          ],
+          
           config: {
             locale: 'Ru',
-            eventLimit:1,
+            eventLimit:true,
             eventColor: '#458CC7',
             columnFormat: 'dddd',
             selectHelper: true,
             header: {
-              left: 'prev, next today',
-              right: '',
+              left: '',
+              right: 'prev, next',
             },
           },
         }
@@ -88,9 +58,9 @@
             title : 'Мероприятия <a href="#" class="close">&times;</a>',
             content : ` <div class="media">
                           <div class="media-body">
-                            <em>${moment(event.start).format('DD.MM.YYYY')}</em>
-                            <h4 class="media-heading">${event.title}</h4>
-                            <p>${event.description}</p></div>
+                            <em>${moment(event.start).format('DD.MM.YYYY h:m')}</em>
+                            <h5 class="media-heading">${event.title}</h5>
+                            </div>
                           </div>
                         <div>${this.contentButton}`
             });
@@ -102,7 +72,8 @@
                 if (!element.is(e.target) && element.has(e.target).length === 0 && $('.popover').has(e.target).length === 0)
                     element.popover('hide');
             });
-             $(document).on("click", ".popover .close, .fc-close" , function(){
+             $(document).on("click", ".popover .close, .fc-close" , function(e){
+                e.preventDefault();
                 $(".popover").popover('hide');
             });
             
@@ -112,6 +83,11 @@
           this.showSnackbar = true
         }
       }, 
+      computed:{
+        ...mapGetters('Events', {
+          'events':'getEvents'
+        })
+      },
       components: {
         FullCalendar,
         

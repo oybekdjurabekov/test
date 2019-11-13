@@ -1,10 +1,13 @@
 <template>
   <div class="right col m3">
     <ul id="nav-mobile" class="left navbar-list">
-      <router-link v-for="(items, index) in listItems" :key="index" :to="items.url" tag="li">
-          <a >{{items.title}}</a>
+      <router-link  :to="{path:'release'}" tag="li">
+          <a >{{$t("release")}}</a>
       </router-link>
-      <li><a @click="logout">Выход</a></li>
+      <router-link  :to="{path:'profile'}" tag="li">
+          <a >{{$t("profile")}}</a>
+      </router-link>
+      <li><a @click="logout">{{ $t("exit") }}</a></li>
       <li>
         <md-menu  md-align-trigger class="">
           <md-badge md-content="1" md-menu-trigger>

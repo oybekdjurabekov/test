@@ -7,6 +7,7 @@ import ToDoList from './modules/tasks.js';
 import Release from './modules/release.js';
 import Meeting from './modules/meeting.js';
 import Login from './auth/login.js';
+import Events from './modules/events.js';
 import VueMaterial from 'vue-material'
 Vue.use(VueMaterial)
 
@@ -16,6 +17,7 @@ export default new Vuex.Store({
 	modules:{
        menu,
        ToDoList,
+       Events,
        Meeting,
        Login,
        Release,

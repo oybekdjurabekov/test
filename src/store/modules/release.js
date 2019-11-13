@@ -1,40 +1,8 @@
+import axios from 'axios';
 export default{
 		namespaced:true,
 		state:{
-			items:[
-				{
-					id:1,
-					file:'/assets/img/img1.jpg',
-					title:'Заголовок 1',
-					data:'23 Apr 15:00',
-					admin:'admin admin',
-					description:'Fashion is a popular style, especially in clothing, footwear, lifestyle, accessories, makeup, hairstyle and body.',
-				},
-				{
-					id:2,
-					file:'/assets/img/img1.jpg',
-					title:'Заголовок 2',
-					data:'23 Apr 15:00',
-					admin:'admin admin',
-					description:'Fashion is a popular style, especially in clothing, footwear, lifestyle, accessories, makeup, hairstyle and body.',
-				},
-				{
-					id:3,
-					file:'/assets/img/img1.jpg',
-					title:'Заголовок 3',
-					data:'23 Apr 15:00',
-					admin:'admin admin',
-					description:'Fashion is a popular style, especially in clothing, footwear, lifestyle, accessories, makeup, hairstyle and body.',
-				},
-				{
-					id:4,
-					file:'/assets/img/img3.jpg',
-					title:'Заголовок 4',
-					data:'23 Apr 15:00',
-					admin:'admin admin',
-					description:'Fashion is a popular style, especially in clothing, footwear, lifestyle, accessories, makeup, hairstyle and body.',
-				},
-			],
+			items:[],
 		},
 		getters:{
 			releaseItems(state){
@@ -53,9 +21,27 @@ export default{
 			}
 		},
 		mutations:{
-			
+			getItems(state, payload){
+				state.items.push(payload);
+			},
+			clearItems(state){
+				state.items = []
+			}	
 		},
 		actions:{
-
+			getItems({commit}){
+				return new Promise((resolve, reject) => {
+				commit('clearItems');
+					axios({url: 'press/',  method: 'GET'})
+			        .then(resp => {
+			          const data = resp.data[0];
+			          commit('getItems', data);
+			          resolve(resp);
+			        })
+			        .catch(err => {
+			          reject(err);
+			        });
+			    });	
+			}
 		}
 	}

@@ -18,83 +18,108 @@ import ProfileMeeting from './components/profile/meeting';
 import ProfileInfo from './components/profile/info';
 import ProfileAnswer from './components/profile/answer';
 import ProfileSender from './components/profile/send';
-
+import  Trans from './plugins/translations'
 
 const routes = [
 	{
-		path:'/',
-		name:'dashboard',
-		component:Home,
-		meta: { 
-	        requiresAuth: true
-	      }
-	},
-	{
-		path:'/signin',
-		name:'signin',
-		component:Login,
-		meta: {authPage: true}
-	},
-	{
-		path:'/signup',
-		name:'signup',
-		component:Signup,
-	},
-	{
-		path:'/release',
-		name:'release',
-		component:Release,
-		meta: {requiresAuth: true}
-	},
-	{
-		path:'/release/:id',
-		name:'releaseItem',
-		component:ReleaseItem,
-		meta: {requiresAuth: true}
-	},
-	{
-		path:'/profile',
-		component:Profile,
+		path:'/:lang',
+		component:{
+			template:'<router-view></router-view>'
+		},
 		meta: {requiresAuth: true},
-		children: [
-            {
-	          path: '',
-	          name:'task',
-	          component: ProfileTask
-	        }
-	    ]
+		beforeEnter: Trans.routeMiddleware,
+		children:[
+			{
+				path:'dashboard',
+				name:'dashboard',
+				component:Home,
+				meta: {requiresAuth: true},
+				beforeEnter(to, from, next){
+					store.dispatch('Events/getItems')
+			       .then(done => next())
+			       .catch(err => console.log(err))
+				}
+			},
+			{
+				path:'signin',
+				name:'signin',
+				component:Login,
+				meta: {authPage: true}
+			},
+			{
+				path:'signup',
+				name:'signup',
+				component:Signup,
+			},
+			{
+				path:'release',
+				name:'release',
+				component:Release,
+				meta: {requiresAuth: true},
+				beforeEnter(to, from, next){
+					store.dispatch('Release/getItems')
+				       .then(done => next())
+				       .catch(err => console.log(err))
+				}
+			},
+			{
+				path:'/release/:id',
+				name:'releaseItem',
+				component:ReleaseItem,
+				meta: {requiresAuth: true},
+				beforeEnter(to, from, next){
+					store.dispatch('Release/getItems')
+				       .then(done => next())
+				       .catch(err => console.log(err))
+				}
+			},
+			{
+				path:'/profile',
+				component:Profile,
+				meta: {requiresAuth: true},
+				children: [
+		            {
+			          path: '',
+			          name:'task',
+			          component: ProfileTask
+			        }
+			    ]
+			},
+			{
+				path:'/profile/:title',
+				component:Profile,
+				meta: {requiresAuth: true},
+				children: [
+		            {
+			          path: '/profile/meeting',
+			          name:'meeting',
+			          component: ProfileMeeting
+			        },
+			        {
+			          path: '/profile/answer',
+			          name:'answer',
+			          component: ProfileAnswer
+			        },
+			        {
+			          path: '/profile/sender',
+			          name:'sender',
+			          component: ProfileSender
+			        },
+			        {
+			          path: '/profile/info',
+			          name:'info',
+			          component: ProfileInfo
+			        },
+			    ]
+			}
+		]
 	},
-	{
-		path:'/profile/:title',
-		component:Profile,
-		meta: {requiresAuth: true},
-		children: [
-            {
-	          path: '/profile/meeting',
-	          name:'meeting',
-	          component: ProfileMeeting
-	        },
-	        {
-	          path: '/profile/answer',
-	          name:'answer',
-	          component: ProfileAnswer
-	        },
-	        {
-	          path: '/profile/sender',
-	          name:'sender',
-	          component: ProfileSender
-	        },
-	        {
-	          path: '/profile/info',
-	          name:'info',
-	          component: ProfileInfo
-	        },
-	    ]
-	}
+	
 ];
 
 export const router = new VueRouter({
 	routes,
+	base: __dirname,
 	mode: 'history',
 })
 
@@ -102,19 +127,17 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     // этот путь требует авторизации, проверяем залогинен ли
     // пользователь, и если нет, перенаправляем на страницу логина
-    if (store.getters.isLoggedIn) {
+    if (!store.getters['Login/isLoggedIn']) {
       next({
-        path: '/signin',
-        query: { redirect: to.fullPath }
+        name: 'signin',
       })
     } else {
       next()
     }
   } else if(to.matched.some(record => record.meta.authPage)) {
-    if (store.getters.isLoggedIn) {
+    if (store.getters['Login/isLoggedIn']) {
       next({
         name: 'dashboard',
-        query: { redirect: to.fullPath }
       })
     } else {
       next()

@@ -1,7 +1,7 @@
 <template>
  <div class="col s12 ">
     <div class="container" style="margin:40px 0;">
-         <form novalidate @submit.prevent="validateUser">
+         <form novalidate enctype="multipart/form-data" @submit.prevent="validateUser">
             <md-card class=" border-radius-6 ">
               <md-card-header>
                 <div class="md-title">Регистрация</div>
@@ -15,21 +15,18 @@
                       <label>Имя пользователя</label>
                       <md-input name="username" autocomplete="off" v-model="form.username" :disabled="sending" />
                       <span class="md-error" v-if="!$v.form.username.required">Обязательно поле</span>
-                      <span class="md-error" v-else-if="!$v.form.username.minlength">Invalid Имя пользователя</span>
                     </md-field>
                     <md-field :class="getValidationClass('first_name')">
                       <md-icon>person_outline</md-icon>
                       <label>Фамилия</label>
                       <md-input name="first_name" id="first_name" autocomplete="off" v-model="form.first_name" :disabled="sending" />
                       <span class="md-error" v-if="!$v.form.first_name.required">Обязательно поле</span>
-                      <span class="md-error" v-else-if="!$v.form.first_name.minlength">Invalid Фамилия</span>
                     </md-field>
                     <md-field :class="getValidationClass('last_name')">
                       <md-icon>person_outline</md-icon>
                       <label>Имя</label>
                       <md-input name="last_name" id="last_name" autocomplete="off" v-model="form.last_name" :disabled="sending" />
                       <span class="md-error" v-if="!$v.form.last_name.required">Обязательно поле</span>
-                      <span class="md-error" v-else-if="!$v.form.last_name.minlength">Invalid Имя</span>
                     </md-field>
                     <md-field :class="getValidationClass('birthdate')">
                       <md-datepicker md-immediately v-model="form.birthdate" 
@@ -46,7 +43,6 @@
                       <label>Место рождения</label>
                       <md-input name="birthplace" id="birthplace" autocomplete="off" v-model="form.birthplace" :disabled="sending" />
                       <span class="md-error" v-if="!$v.form.birthplace.required">Обязательно поле</span>
-                      <span class="md-error" v-else-if="!$v.form.birthplace.minlength">Invalid birthplace</span>
                     </md-field>
                 </div>
                 <div class="md-gutter">
@@ -57,7 +53,6 @@
                       <label>Email</label>
                       <md-input type="email" name="email" id="email" autocomplete="off" v-model="form.email" :disabled="sending" />
                       <span class="md-error" v-if="!$v.form.email.required">Обязательно поле</span>
-                      <span class="md-error" v-else-if="!$v.form.email.minlength">Invalid email</span>
                     </md-field>
                     <md-field :class="getValidationClass('phone')">
                       <md-icon>phone_iphone</md-icon>
@@ -83,14 +78,12 @@
                     <label>work_address</label>
                     <md-input name="work_address" id="work_address" autocomplete="off" v-model="form.work_address" :disabled="sending" />
                     <span class="md-error" v-if="!$v.form.work_address.required">Обязательно поле</span>
-                    <span class="md-error" v-else-if="!$v.form.work_address.minlength">Invalid work_address</span>
                   </md-field>
                   <md-field :class="getValidationClass('position')">
                       <md-icon>turned_in_not</md-icon>
                       <label>position</label>
                       <md-input name="position" autocomplete="off" v-model="form.position" :disabled="sending" />
                       <span class="md-error" v-if="!$v.form.position.required">Обязательно поле</span>
-                      <span class="md-error" v-else-if="!$v.form.position.minlength">Invalid position</span>
                   </md-field>
                   <md-field :class="getValidationClass('position_date')">
                     <md-datepicker md-immediately v-model="form.position_date" 
@@ -107,14 +100,12 @@
                     <label>editorial_office_phone</label>
                     <md-input v-mask="'+998 ## ###-##-##'" type="tel" name="editorial_office_phone" id="editorial_office_phone" autocomplete="off" v-model="form.editorial_office_phone" :disabled="sending" />
                     <span class="md-error" v-if="!$v.form.editorial_office_phone.required">Обязательно поле</span>
-                    <span class="md-error" v-else-if="!$v.form.editorial_office_phone.minlength">Invalid editorial_office_phone</span>
                   </md-field>
                   <md-field :class="getValidationClass('editorial_office_address')">
                     <md-icon>location_on</md-icon>
                     <label>editorial_office_address</label>
                     <md-input name="editorial_office_address" id="editorial_office_address" autocomplete="off" type="text" v-model="form.editorial_office_address" :disabled="sending" />
                     <span class="md-error" v-if="!$v.form.editorial_office_address.required">Обязательно поле</span>
-                    <span class="md-error" v-else-if="!$v.form.editorial_office_address.minlength">Invalid editorial_office_address</span>
                   </md-field>
                 </div>
                 <div class="md-gutter">
@@ -122,15 +113,14 @@
                   <hr/>
                     <md-field :class="getValidationClass('email')">
                       <label>identity_photo</label>
-                      <md-file name="identity_photo" id="identity_photo" v-model="form.identity_photo" :disabled="sending"/>
+                      <md-file name="identity_photo" @change="onIdentity($event.target.files)" ref="form.identity_photo" id="identity_photo" accept="image/*" :disabled="sending"/>
                       <span class="md-error" v-if="!$v.form.identity_photo.required">Обязательно поле</span>
                       <span class="md-error" v-else-if="!$v.form.identity_photo.minlength">Invalid identity_photo</span>
                     </md-field>
                     <md-field :class="getValidationClass('photo')">
                       <label>photo</label>
-                      <md-file name="photo" id="photo" v-model="form.photo" :disabled="sending"/>
+                      <md-file name="photo" @change="onPhoto($event.target.files)" accept="image/*" ref="form.photo" id="photo"  :disabled="sending"/>
                       <span class="md-error" v-if="!$v.form.photo.required">Обязательно поле</span>
-                      <span class="md-error" v-else-if="!$v.form.photo.minlength">Invalid photo</span>
                     </md-field>
                 </div>
                 <div class="md-gutter">
@@ -205,7 +195,6 @@
       form: {
         username: {
           required,
-          minLength: minLength(3)
         },
         phone: {
           required,
@@ -221,11 +210,9 @@
         },
         first_name: {
           required,
-          minLength: minLength(3)
         },
         last_name: {
           required,
-          minLength: minLength(3)
         },
         email: {
           required,
@@ -236,30 +223,24 @@
         },
         birthplace: {
           required,
-          minLength: minLength(6)
         },
         work_address: {
           required,
-          minLength: minLength(10)
         },
         position: {
           required,
-          minLength: minLength(5)
         },
         position_date: {
           required,
         },
         emergency_phone: {
           required,
-          minLength: minLength(17)
         },
         editorial_office_phone: {
           required,
-          minLength: minLength(17)
         },
         editorial_office_address: {
           required,
-          minLength: minLength(10)
         },
         photo: {
           required,
@@ -270,6 +251,12 @@
       }
     },
     methods: {
+      onIdentity(event){
+        this.form.identity_photo = event[0]
+      },
+      onPhoto(event){
+        this.form.photo = event[0]
+      },
       register: function () {
         let data = {
           username: this.form.username,
@@ -285,18 +272,16 @@
           position_date: this.form.position_date,
           emergency_phone: this.form.emergency_phone,
           editorial_office_phone: this.form.editorial_office_phone,
+          photo:this.form.photo,
+          identity_photo:this.form.identity_photo,
           editorial_office_address: this.form.editorial_office_address,
-          photo: this.form.photo,
-          identity_photo: this.form.identity_photo
         }
-        console.log(data)
-        this.$store.dispatch('Login/register', data)
+        this.$store.dispatch('Login/register', {data})
        .then(() => this.$router.push('/signin'))
        .catch(err => console.log(err))
       },
       getValidationClass (fieldName) {
         const field = this.$v.form[fieldName]
-
         if (field) {
           return {
             'md-invalid': 'field.$invalid' && field.$dirty

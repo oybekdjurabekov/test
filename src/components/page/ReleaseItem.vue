@@ -4,11 +4,15 @@
       <div class="section">
           <div class="card">
               <div class="card-content">
+                  <h1 class="caption mb-0">
+                      {{items.title}}
+                  </h1>
+                  <img :src="items.img" alt=""/>
                   <p class="caption mb-0">
-                      Sample blank page for getting start!! Created and designed by Google, Material Design is a design
-                      language that combines the classic principles of successful design along with innovation and
-                      technology.
+                      {{items.content}}
                   </p>
+                  <em>{{items.moderator}}</em>
+                  <p>{{items.created_at}}</p>
               </div>
           </div>
       </div>
@@ -18,12 +22,12 @@
 <script>
   export default{
     computed:{
-            id(){
-                return this.$route.params.id
-            },
-            items(){
-                return this.$store.getters['news/item'](this.id)
-            }
-        }
+      id(){
+          return this.$route.params.id
+      },
+      items(){
+          return this.$store.getters['Release/item'](this.id)
+      }
+    }
   }
 </script>

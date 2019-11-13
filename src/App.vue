@@ -6,7 +6,7 @@
             <nav style="box-shadow: none;" class="navbar-main navbar-color nav-collapsible sideNav-lock navbar-dark light-blue no-shadow">
                 <div class="nav-wrapper">
                     <router-link class="brand-logo left ml-3" :to="{name:'dashboard'}" tag="a">
-                        Главная страница
+                        {{$t("homepage")}}
                     </router-link>
                     <appMenu :listItems="listItems" :isLoggedIn="isLoggedIn" @logout="logout"></appMenu>
                 </div>
@@ -32,7 +32,6 @@
 </template>
 
 <script>
-import router from './routes';
 import appMenu from './components/menu/menu';
 import { mapGetters } from 'vuex';
 export default {
